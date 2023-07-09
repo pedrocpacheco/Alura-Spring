@@ -1,0 +1,10 @@
+Data Transfer Object são classes que contem apenas os campos que 
+desejamos enviar ou receber da API
+
+Ele não contém logica nenhuma, sendo usado apenas para a transferencia
+facilitada de data
+
+Utilizamos os Record para trabalhar com DTO, pois Esse tipo de classe se 
+encaixa perfeitamente para representar classes DTO, já que seu objetivo 
+é apenas representar dados que serão recebidos ou devolvidos pela API, 
+sem nenhum tipo de comportamento.

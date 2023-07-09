@@ -1,4 +1,4 @@
-package med.voll.api.entity.doctor;
+package med.voll.api.dto.doctor;
 
 public enum Specialty {
     
