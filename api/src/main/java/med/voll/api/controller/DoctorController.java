@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.transaction.Transactional;
 import med.voll.api.dto.doctor.DoctorData;
 import med.voll.api.entity.Doctor;
 import med.voll.api.repository.DoctorRepository;
@@ -26,6 +27,7 @@ public class DoctorController {
     }
 
     @PostMapping        // 1- Requisições Post precisam do @RequestBody
+    @Transactional
     public void register(@RequestBody DoctorData data){
         repository.save(new Doctor(data));
     }
