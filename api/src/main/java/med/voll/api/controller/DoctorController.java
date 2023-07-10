@@ -1,7 +1,6 @@
 package med.voll.api.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,25 +33,15 @@ public class DoctorController {
     @Autowired
     private DoctorRepository repository;
 
-    @PostMapping        // 1- Requisições Post precisam do @RequestBody
-    @Transactional                    // Pede pro Spring conversar com o BeanValidation
-    public ResponseEntity register(@RequestBody @Valid DoctorRequestDTO data, UriComponentsBuilder uriBuilder){
+    @PostMapping       
+    @Transactional      
+    public ResponseEntity<DoctorDetailsDTO> register(@RequestBody @Valid DoctorRequestDTO data, UriComponentsBuilder uriBuilder){
         Doctor doctor = new Doctor(data);
         repository.save(doctor);
 
         URI uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DoctorDetailsDTO(doctor));
-    }
-
-    /*
-     * Exemplo de metodo que retorna uma entidade completa da JPA. Isso é 
-     * uma ma pratica, pois pode ter campos que não queremos que sejam vistos
-     * como a senha do usuario por exemplo. Os metodos seguinte vao corrigir isso 
-     */
-    @GetMapping(value =  "/full") // /doctors/full -> o @RequestMapping tem o padrao
-    public List<Doctor> findAllFullEntities(){
-        return repository.findAll();
     }
 
     /*
@@ -99,29 +88,24 @@ public class DoctorController {
         return ResponseEntity.ok(page); 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorDetailsDTO> detailById(@PathVariable Long id){
+        Doctor doctor = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DoctorDetailsDTO(doctor));
+    }
+
     @PutMapping
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid DoctorUpdateDTO data){
+    public ResponseEntity<DoctorDetailsDTO> update(@RequestBody @Valid DoctorUpdateDTO data){
         Doctor doctor = repository.getReferenceById(data.id());
         doctor.updateInfo(data);
 
         return ResponseEntity.ok(new DoctorDetailsDTO(doctor));
     }
 
-    /*
-     * Aqui estamos fazendo uma exclusão completa de um Doctor ou seja, ele sera excluido 
-     * completamente do banco de dados, também veremos como realizar uma exclusão logica
-     * que não deleta o Doctor do banco de dados, e so o deixa inatvio
-     * 
-     * 1- Precisamos colocar no DeleteMapping o caminho que usaremos para deletar determinado
-     * Doctor, para isso, colocamos o /{id} para indicar que a exclusão sera feita com este
-     * 
-     * 2- Então, precisamos colocar dentro do delete() o Long ID junto da @PathVariable
-     * indicando que aquele parametro tem ligação com o caminho da url
-     */
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         Doctor doctor = repository.getReferenceById(id);
         doctor.delete();
 
