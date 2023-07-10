@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.dto.doctor.DoctorRequestDTO;
 import med.voll.api.dto.doctor.DoctorResponseDTO;
+import med.voll.api.dto.doctor.DoctorUpdateDTO;
 import med.voll.api.entity.Doctor;
 import med.voll.api.repository.DoctorRepository;
 
@@ -85,4 +87,10 @@ public class DoctorController {
         repository.save(new Doctor(data));
     }
 
+    @PutMapping
+    @Transactional
+    public void update(@RequestBody @Valid DoctorUpdateDTO data){
+        Doctor doctor = repository.getReferenceById(data.id());
+        doctor.updateInfo(data);
+    }
 }

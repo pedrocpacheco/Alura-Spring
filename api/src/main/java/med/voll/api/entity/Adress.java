@@ -46,4 +46,29 @@ public class Adress {
     @Column(name = "num_doctor")
     private String number;
 
+    /*
+     * Aqui, fazemos a mesma coisa que realizamos na classe Doctor. Estamos modificando os dados
+     * do objeto Adress com as informações passadas pelo objeto data. Mas, precisamos realizar
+     * as validações com os blocos ifs, pois o usuario pode não querer atualizar seu endereço todo
+     * 
+     * Detalhe que, nesse caso, o usuario tem acesso de modificar o seu endereço por completo, então
+     * não precisamos criar outro DTO exclusivo para update, como fizemos com o Doctor.
+     */
+    public void updateInfo(AdressData data){
+        if(data.street() != null)
+            this.street = data.street();
+        if(data.neighborhood() != null)
+            this.neighborhood = data.neighborhood();
+        if(data.cep() != null)
+            this.cep = data.cep();
+        if(data.city() != null)
+            this.city = data.city();
+        if(data.uf() != null)
+            this.uf = data.uf();
+        if(data.complement() != null)
+            this.complement = data.complement();
+        if(data.number() != null)
+            this.number = data.number();
+    }
+
 }

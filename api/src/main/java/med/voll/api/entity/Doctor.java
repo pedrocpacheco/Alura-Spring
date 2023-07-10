@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import med.voll.api.dto.doctor.DoctorRequestDTO;
+import med.voll.api.dto.doctor.DoctorUpdateDTO;
 
 @Getter
 @Setter
@@ -58,5 +59,25 @@ public class Doctor {
 
     @Embedded
     private Adress adress;
+
+    /*
+     * Estamos querendo atualizar os dados de um Doctor,para isso, criamos um novo DTO 
+     * e passamos ele como Parametro para este metodo. O que vamos fazer, é modificar
+     * os dados do objeto Doctor pelos dados que o objeto data possui.
+     * 
+     * Mas, precisamos fazer uma validação antes, pois pode ser que o usuario não deseje
+     * mudar todos os atributos de uma vez, por isso utilizamos esses ifs
+     *
+     * Como o Adress é uma Classe por si so, criamos um metodo igual a este nela, e passamos
+     * o data.adress() que devolve um AdressData como parametro do metodo
+     */
+    public void updateInfo(DoctorUpdateDTO data){
+        if(data.name() != null)
+            this.name = data.name();
+        if(data.phone() != null)
+            this.phone = data.phone();
+        if(data.adress() != null)
+            this.adress.updateInfo(data.adress());
+    }
 
 }
