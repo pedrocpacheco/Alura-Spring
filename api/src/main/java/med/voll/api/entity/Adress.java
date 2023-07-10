@@ -1,5 +1,6 @@
 package med.voll.api.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,18 +25,25 @@ public class Adress {
         this.number = data.number(); 
     }
     
+    @Column(name = "street_doctor")
     private String street;
 
+    @Column(name = "neigh_doctor")
     private String neighborhood;
     
+    @Column(name = "cep_doctor")
     private String cep; 
 
+    @Column(name = "city_doctor")
     private String city; 
     
+    @Column(name = "uf_doctor")
     private String uf; 
     
+    @Column(name = "comp_doctor")
     private String complement;
 
+    @Column(name = "num_doctor")
     private String number;
 
 }

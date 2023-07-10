@@ -55,7 +55,6 @@ public class Doctor {
     private Specialty specialty;
 
     @Embedded
-    @Column(name = "adr_doctor")
     private Adress adress;
 
 }
