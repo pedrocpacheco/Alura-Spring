@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import med.voll.api.dto.adress.AdressData;
 import med.voll.api.entity.Specialty;
 
-public record DoctorData(
+public record DoctorRequestDTO(
 
     //@NotNull
     @NotBlank // -> @NotBlank ja usa o @NotNull

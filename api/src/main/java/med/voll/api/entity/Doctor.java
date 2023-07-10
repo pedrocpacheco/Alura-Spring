@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import med.voll.api.dto.doctor.DoctorData;
+import med.voll.api.dto.doctor.DoctorRequestDTO;
 
 @Getter
 @Setter
@@ -26,7 +26,7 @@ import med.voll.api.dto.doctor.DoctorData;
 @Table(name = "tb_doctor")
 public class Doctor {
     
-    public Doctor(DoctorData data) {
+    public Doctor(DoctorRequestDTO data) {
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
