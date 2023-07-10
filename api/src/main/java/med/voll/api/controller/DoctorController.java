@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,5 +94,22 @@ public class DoctorController {
     public void update(@RequestBody @Valid DoctorUpdateDTO data){
         Doctor doctor = repository.getReferenceById(data.id());
         doctor.updateInfo(data);
+    }
+
+    /*
+     * Aqui estamos fazendo uma exclusão completa de um Doctor ou seja, ele sera excluido 
+     * completamente do banco de dados, também veremos como realizar uma exclusão logica
+     * que não deleta o Doctor do banco de dados, e so o deixa inatvio
+     * 
+     * 1- Precisamos colocar no DeleteMapping o caminho que usaremos para deletar determinado
+     * Doctor, para isso, colocamos o /{id} para indicar que a exclusão sera feita com este
+     * 
+     * 2- Então, precisamos colocar dentro do delete() o Long ID junto da @PathVariable
+     * indicando que aquele parametro tem ligação com o caminho da url
+     */
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable Long id){
+        repository.deleteById(id);
     }
 }
