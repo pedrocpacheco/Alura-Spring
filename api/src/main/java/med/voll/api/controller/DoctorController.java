@@ -3,6 +3,8 @@ package med.voll.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,10 +49,17 @@ public class DoctorController {
      *      - Realizamos um stram para separar todos os Doctors.
      *      - Realizamos um map para fazer uma ação em cada um deles
      *      - E então, usamos o Doctor para construtir o nosso DTO
+     *
+     * 2- Com isso concluido, começamos a fazer a paginação da resposta
+     *     - Primeiramente então passamos um objeto Pageable como parametro do metodo findAll
+     *     (no nosso, e depois do no proprio repositorio)
+     *     - Então, mudamos o tipo do retorno de List para Page
+     *     - Por ultimo, removemos o .stream() e o .toList(), pois o Page ja tem um 
+     *     metodo map, que devolve um Page também.
      */
     @GetMapping // Não precisa de @Transactional
-    public List<DoctorResponseDTO> list(){
-        return repository.findAll().stream().map(DoctorResponseDTO::new).toList();
+    public Page<DoctorResponseDTO> findAll(Pageable pagination){
+        return repository.findAll(pagination).map(DoctorResponseDTO::new);
     }
     
 
