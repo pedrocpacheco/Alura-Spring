@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import med.voll.api.dto.doctor.DoctorData;
 import med.voll.api.entity.Doctor;
 import med.voll.api.repository.DoctorRepository;
@@ -27,8 +28,8 @@ public class DoctorController {
     }
 
     @PostMapping        // 1- Requisições Post precisam do @RequestBody
-    @Transactional
-    public void register(@RequestBody DoctorData data){
+    @Transactional                    // Pede pro Spring conversar com o BeanValidation
+    public void register(@RequestBody @Valid DoctorData data){
         repository.save(new Doctor(data));
     }
 
