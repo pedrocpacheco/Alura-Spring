@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.dto.doctor.DoctorRequestDTO;
 import med.voll.api.dto.doctor.DoctorResponseDTO;
 import med.voll.api.dto.doctor.DoctorUpdateDTO;
-import med.voll.api.dto.doctor.DoctorUpdateDetailsDTO;
+import med.voll.api.dto.doctor.DoctorDetailsDTO;
 import med.voll.api.entity.Doctor;
 import med.voll.api.repository.DoctorRepository;
 
@@ -31,6 +34,17 @@ public class DoctorController {
     
     @Autowired
     private DoctorRepository repository;
+
+    @PostMapping        // 1- Requisições Post precisam do @RequestBody
+    @Transactional                    // Pede pro Spring conversar com o BeanValidation
+    public ResponseEntity register(@RequestBody @Valid DoctorRequestDTO data, UriComponentsBuilder uriBuilder){
+        Doctor doctor = new Doctor(data);
+        repository.save(doctor);
+
+        URI uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DoctorDetailsDTO(doctor));
+    }
 
     /*
      * Exemplo de metodo que retorna uma entidade completa da JPA. Isso é 
@@ -86,19 +100,13 @@ public class DoctorController {
         return ResponseEntity.ok(page); 
     }
 
-    @PostMapping        // 1- Requisições Post precisam do @RequestBody
-    @Transactional                    // Pede pro Spring conversar com o BeanValidation
-    public ResponseEntity register(@RequestBody @Valid DoctorRequestDTO data){
-        repository.save(new Doctor(data));
-    }
-
     @PutMapping
     @Transactional
     public ResponseEntity update(@RequestBody @Valid DoctorUpdateDTO data){
         Doctor doctor = repository.getReferenceById(data.id());
         doctor.updateInfo(data);
 
-        return ResponseEntity.ok(new DoctorUpdateDetailsDTO(doctor));
+        return ResponseEntity.ok(new DoctorDetailsDTO(doctor));
     }
 
     /*
