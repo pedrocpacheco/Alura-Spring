@@ -1,6 +1,7 @@
 package med.voll.api.dto.doctor;
 
 import med.voll.api.dto.adress.AdressData;
+import med.voll.api.entity.Specialty;
 
 public record DoctorData(String name, String email, String crm, Specialty specialty, AdressData adress) {
 
