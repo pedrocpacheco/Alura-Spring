@@ -28,6 +28,7 @@ import med.voll.api.dto.doctor.DoctorUpdateDTO;
 public class Doctor {
     
     public Doctor(DoctorRequestDTO data) {
+        this.active = true;
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
@@ -60,6 +61,8 @@ public class Doctor {
     @Embedded
     private Adress adress;
 
+    private Boolean active;
+
     /*
      * Estamos querendo atualizar os dados de um Doctor,para isso, criamos um novo DTO 
      * e passamos ele como Parametro para este metodo. O que vamos fazer, é modificar
@@ -78,6 +81,10 @@ public class Doctor {
             this.phone = data.phone();
         if(data.adress() != null)
             this.adress.updateInfo(data.adress());
+    }
+
+    public void delete() {
+        this.active = false;
     }
 
 }

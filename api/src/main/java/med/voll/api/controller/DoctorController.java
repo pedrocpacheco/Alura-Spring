@@ -80,7 +80,7 @@ public class DoctorController {
      */
     @GetMapping // Não precisa de @Transactional
     public Page<DoctorResponseDTO> findAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
-        return repository.findAll(pagination).map(DoctorResponseDTO::new);
+        return repository.findAllByActiveTrue(pagination).map(DoctorResponseDTO::new);
     }
 
     @PostMapping        // 1- Requisições Post precisam do @RequestBody
@@ -110,6 +110,7 @@ public class DoctorController {
     @DeleteMapping("/{id}")
     @Transactional
     public void delete(@PathVariable Long id){
-        repository.deleteById(id);
+        Doctor doctor = repository.getReferenceById(id);
+        doctor.delete();
     }
 }
