@@ -14,10 +14,10 @@ import med.voll.api.entity.Specialty;
  * entidades completas, e não um dto que desejamos.
  *    - Para lidar com isso, criamos aqui um construtor que receba a nossa entidade
  */
-public record DoctorResponseDTO(String name, String email, String crm, Specialty specialty) {
+public record DoctorResponseDTO(Long id, String name, String email, String crm, Specialty specialty) {
     
     public DoctorResponseDTO(Doctor doctor){
-        this(doctor.getName(), doctor.getEmail(), doctor.getCrm(), doctor.getSpecialty());
+        this(doctor.getId() ,doctor.getName(), doctor.getEmail(), doctor.getCrm(), doctor.getSpecialty());
     }
 
 
