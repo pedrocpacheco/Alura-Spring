@@ -1,0 +1,1 @@
+alter table tb_doctor add phone_doctor varchar(20) not null;

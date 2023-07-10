@@ -29,6 +29,7 @@ public class Doctor {
     public Doctor(DoctorData data) {
         this.name = data.name();
         this.email = data.email();
+        this.phone = data.phone();
         this.crm = data.crm();
         this.specialty = data.specialty();
         this.adress =  new Adress(data.adress());
@@ -43,6 +44,10 @@ public class Doctor {
 
     @Column(name = "em_doctor")
     private String email;
+
+    @Column(name = "phone_doctor")
+    private String phone;
+    // Adicionado depois -> precisa criar outra migration
 
     @Column(name = "crm_doctor")
     private String crm;

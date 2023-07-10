@@ -19,6 +19,9 @@ public record DoctorData(
     String email, 
 
     @NotBlank
+    String phone,
+
+    @NotBlank
     @Pattern(regexp = "\\d{4,6}") // numero de 4 à 6 digitos
     String crm, 
     
@@ -28,7 +31,7 @@ public record DoctorData(
     @NotNull
     @Valid  // Como é outro DTO, precisa validar la tambem
     AdressData adress
-    
+
     ) {
 
 }
