@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import jakarta.validation.Valid;
 import med.voll.api.dto.doctor.DoctorRequestDTO;
 import med.voll.api.dto.doctor.DoctorResponseDTO;
 import med.voll.api.dto.doctor.DoctorUpdateDTO;
+import med.voll.api.dto.doctor.DoctorUpdateDetailsDTO;
 import med.voll.api.entity.Doctor;
 import med.voll.api.repository.DoctorRepository;
 
@@ -79,21 +81,24 @@ public class DoctorController {
      *    Esse padrão é mudado como alteremos a URL
      */
     @GetMapping // Não precisa de @Transactional
-    public Page<DoctorResponseDTO> findAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
-        return repository.findAllByActiveTrue(pagination).map(DoctorResponseDTO::new);
+    public ResponseEntity<Page<DoctorResponseDTO>> findAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
+        var page = repository.findAllByActiveTrue(pagination).map(DoctorResponseDTO::new);
+        return ResponseEntity.ok(page); 
     }
 
     @PostMapping        // 1- Requisições Post precisam do @RequestBody
     @Transactional                    // Pede pro Spring conversar com o BeanValidation
-    public void register(@RequestBody @Valid DoctorRequestDTO data){
+    public ResponseEntity register(@RequestBody @Valid DoctorRequestDTO data){
         repository.save(new Doctor(data));
     }
 
     @PutMapping
     @Transactional
-    public void update(@RequestBody @Valid DoctorUpdateDTO data){
+    public ResponseEntity update(@RequestBody @Valid DoctorUpdateDTO data){
         Doctor doctor = repository.getReferenceById(data.id());
         doctor.updateInfo(data);
+
+        return ResponseEntity.ok(new DoctorUpdateDetailsDTO(doctor));
     }
 
     /*
@@ -109,8 +114,10 @@ public class DoctorController {
      */
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         Doctor doctor = repository.getReferenceById(id);
         doctor.delete();
+
+        return ResponseEntity.noContent().build();
     }
 }
