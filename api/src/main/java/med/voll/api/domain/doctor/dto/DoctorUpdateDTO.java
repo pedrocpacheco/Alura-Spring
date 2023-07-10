@@ -1,7 +1,7 @@
-package med.voll.api.dto.doctor;
+package med.voll.api.domain.doctor.dto;
 
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.dto.adress.AdressData;
+import med.voll.api.domain.adress.dto.AdressDTO;
 
 /*
  * Estamos criando um novo DTO que contem apenas as informações que desejamos
@@ -18,7 +18,7 @@ public record DoctorUpdateDTO(
     Long id,
     String name, 
     String phone, 
-    AdressData adress
+    AdressDTO adress
     
     ) {
     

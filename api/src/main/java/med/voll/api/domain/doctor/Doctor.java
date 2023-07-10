@@ -1,4 +1,4 @@
-package med.voll.api.entity;
+package med.voll.api.domain.doctor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -14,8 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import med.voll.api.dto.doctor.DoctorRequestDTO;
-import med.voll.api.dto.doctor.DoctorUpdateDTO;
+import med.voll.api.domain.adress.Adress;
+import med.voll.api.domain.doctor.dto.DoctorRequestDTO;
+import med.voll.api.domain.doctor.dto.DoctorUpdateDTO;
 
 @Getter
 @Setter

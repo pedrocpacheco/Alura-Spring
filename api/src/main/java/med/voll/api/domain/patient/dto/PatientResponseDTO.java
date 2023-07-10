@@ -1,6 +1,6 @@
-package med.voll.api.dto.patient;
+package med.voll.api.domain.patient.dto;
 
-import med.voll.api.entity.Patient;
+import med.voll.api.domain.patient.Patient;
 
 public record PatientResponseDTO(Long id, String name, String email, String cpf) {
 

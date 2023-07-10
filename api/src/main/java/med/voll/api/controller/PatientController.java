@@ -19,12 +19,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.dto.patient.PatientDetailsDTO;
-import med.voll.api.dto.patient.PatientRequestDTO;
-import med.voll.api.dto.patient.PatientResponseDTO;
-import med.voll.api.dto.patient.PatientUpdateDTO;
-import med.voll.api.entity.Patient;
-import med.voll.api.repository.PatientRepository;
+import med.voll.api.domain.patient.Patient;
+import med.voll.api.domain.patient.PatientRepository;
+import med.voll.api.domain.patient.dto.PatientDetailsDTO;
+import med.voll.api.domain.patient.dto.PatientRequestDTO;
+import med.voll.api.domain.patient.dto.PatientResponseDTO;
+import med.voll.api.domain.patient.dto.PatientUpdateDTO;
 
 @RestController
 @RequestMapping("/patients")

@@ -1,7 +1,7 @@
-package med.voll.api.dto.patient;
+package med.voll.api.domain.patient.dto;
 
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.dto.adress.AdressData;
+import med.voll.api.domain.adress.dto.AdressDTO;
 
 public record PatientUpdateDTO(
     
@@ -12,6 +12,6 @@ public record PatientUpdateDTO(
     
     String phone, 
     
-    AdressData adress) {
+    AdressDTO adress) {
     
 }

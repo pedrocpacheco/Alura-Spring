@@ -1,4 +1,4 @@
-package med.voll.api.entity;
+package med.voll.api.domain.adress;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import med.voll.api.dto.adress.AdressData;
+import med.voll.api.domain.adress.dto.AdressDTO;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import med.voll.api.dto.adress.AdressData;
 @Embeddable
 public class Adress {
 
-    public Adress(AdressData data){
+    public Adress(AdressDTO data){
         this.street = data.street();
         this.neighborhood = data.neighborhood();
         this.cep = data.cep();
@@ -54,7 +54,7 @@ public class Adress {
      * Detalhe que, nesse caso, o usuario tem acesso de modificar o seu endereço por completo, então
      * não precisamos criar outro DTO exclusivo para update, como fizemos com o Doctor.
      */
-    public void updateInfo(AdressData data){
+    public void updateInfo(AdressDTO data){
         if(data.street() != null)
             this.street = data.street();
         if(data.neighborhood() != null)

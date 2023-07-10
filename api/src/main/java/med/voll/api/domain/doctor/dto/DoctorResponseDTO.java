@@ -1,7 +1,7 @@
-package med.voll.api.dto.doctor;
+package med.voll.api.domain.doctor.dto;
 
-import med.voll.api.entity.Doctor;
-import med.voll.api.entity.Specialty;
+import med.voll.api.domain.doctor.Doctor;
+import med.voll.api.domain.doctor.Specialty;
 
 /*
  * Este é o DTO de Resposta da API, ou seja, quando alguem fazer uma requisição
