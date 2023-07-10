@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,12 +57,27 @@ public class DoctorController {
      *     - Então, mudamos o tipo do retorno de List para Page
      *     - Por ultimo, removemos o .stream() e o .toList(), pois o Page ja tem um 
      *     metodo map, que devolve um Page também.
+     *  
+     * 2.5- A Paginação não acaba por aqui, tem alguns conceitos que precisam ser entendidos 
+     * mas são sobre o funcionamento do endpoint da api,
+     * 
+     *      - Size: Determina o tamanho da pagina que você deseja 
+     *      - Page: Determina a pagina que você quer
+     * 
+     *      Então, se eu tenho 3 cadastros e determino o size=1, para pegar o 3 cadastro, 
+     *      eu preciso adicionar tbm o page=3
+     * 
+     * 3- Podemos fazer a ordenação e configuração da paginação default utilizando o @PageableDefault
+     *      - Podemos colocar o size que queremos
+     *      - A page que desejamos utilizar (o padrão é a 0)
+     *      - E podemos colocar o sort, que recebe um array, dentro dele o nome 
+     *      do atributo que desejamos que a paginação seja feita
+     *    Esse padrão é mudado como alteremos a URL
      */
     @GetMapping // Não precisa de @Transactional
-    public Page<DoctorResponseDTO> findAll(Pageable pagination){
+    public Page<DoctorResponseDTO> findAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
         return repository.findAll(pagination).map(DoctorResponseDTO::new);
     }
-    
 
     @PostMapping        // 1- Requisições Post precisam do @RequestBody
     @Transactional                    // Pede pro Spring conversar com o BeanValidation
