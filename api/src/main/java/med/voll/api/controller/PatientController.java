@@ -59,7 +59,6 @@ public class PatientController {
         return ResponseEntity.ok(new PatientDetailsDTO(patient));
     }
 
-
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> delete(@PathVariable Long id){
