@@ -34,7 +34,7 @@ public class DoctorController {
     private DoctorRepository repository;
 
     @PostMapping       
-    @Transactional      
+    @Transactional                                                                              // Automatico do Spring
     public ResponseEntity<DoctorDetailsDTO> register(@RequestBody @Valid DoctorRequestDTO data, UriComponentsBuilder uriBuilder){
         Doctor doctor = new Doctor(data);
         repository.save(doctor);

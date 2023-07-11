@@ -1,4 +1,4 @@
-package med.voll.api.infra;
+package med.voll.api.infra.exceptions;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class ErrorHandler {
     
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Void> handleError404(){   // Mudar o retorno depois
+    public ResponseEntity<Void> handleError404(){   
         return ResponseEntity.notFound().build();
     }
 
