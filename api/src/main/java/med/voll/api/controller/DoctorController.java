@@ -88,6 +88,14 @@ public class DoctorController {
         return ResponseEntity.ok(page); 
     }
 
+    /*
+     * Metodo que retorna as informações detalhadas de um doutor pelo seu ID
+     * 
+     * @PathVariable é o Long id passado na URL. 
+     * Criamos um doutor depois de chamar o repository.getReferenceById(id) e então
+     * passamos esse doutor para o construtor do DoctorDetailsDTO, que será retornado
+     * pelo ResponsiveEntity.ok
+     */
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDetailsDTO> detailById(@PathVariable Long id){
         Doctor doctor = repository.getReferenceById(id);
@@ -103,6 +111,10 @@ public class DoctorController {
         return ResponseEntity.ok(new DoctorDetailsDTO(doctor));
     }
 
+    /*
+     * Metodo super simples que chama o Doctor pelo 
+     * repository.getReferenceById e depois usa seu propria delete method
+     */
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> delete(@PathVariable Long id){
