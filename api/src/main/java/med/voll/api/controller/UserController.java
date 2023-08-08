@@ -17,9 +17,6 @@ import med.voll.api.domain.user.UserAuthenticationDTO;
 @RequestMapping("/login")
 public class UserController {
     
-    /*
-     * Chamado para utilizar o UserSerice, não utilizamos ele direto (o service)
-     */
     @Autowired
     private AuthenticationManager manager;
 
